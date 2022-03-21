@@ -40,30 +40,93 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
+        //City
+        Room emptyField1, emptyField2, emptyField3, emptyField4, emptyField5, cityEntrance, twoPitchersPub, 
+        touristCenter, policeStation, scaryAlley, scaryAlley2, signery, townSquare; 
+        
+        //Castle
+        Room castleEntrance, ballroom, grandHall, throneRoom, guardShack, hiddenRoom;
+        
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        emptyField5 = new Room("in an empty field. In the distance you can see a large city of some kind.");
+        emptyField4 = new Room("in an empty field. You are closer to the city in the distance.");
+        emptyField3 = new Room("in an empty field. You are even closer to the city in the distance.");
+        emptyField2 = new Room("in an empty field. You are ever closer to the city in the distance.");
+        emptyField1 = new Room("in an empty field. The city is no longer in the distance.");
+        cityEntrance = new Room(" at the city entrance");
+        townSquare = new Room("in the town square");
+        twoPitchersPub = new Room("in the local pub, The Two Pitchers");
+        scaryAlley = new Room("in a scary alley");
+        scaryAlley2 = new Room("further in a scary alley");
+        touristCenter = new Room("in the city tourist center");
+        policeStation = new Room("in the police station");
+        signery = new Room("at the sign shop");
+        
+        //castle
+        castleEntrance = new Room("at the entrance to the castle");
+        ballroom = new Room("in the castle ballroom");
+        grandHall = new Room("in the Grand Hall");
+        throneRoom = new Room("in the throne room");
+        guardShack = new Room("in the castle guard shack");
+        hiddenRoom = new Room("in a hidden room");
         
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        // city exits
+        emptyField5.setExit("north", emptyField4);
+        
+        emptyField4.setExit("north", emptyField3);
+        emptyField4.setExit("south", emptyField5);
+        
+        emptyField3.setExit("north", emptyField2);
+        emptyField3.setExit("south", emptyField4);
+        
+        emptyField2.setExit("north", emptyField1);
+        emptyField2.setExit("south", emptyField3);
+        
+        emptyField1.setExit("north", cityEntrance);
+        emptyField1.setExit("south", emptyField2);
+        
+        cityEntrance.setExit("north", townSquare);
+        cityEntrance.setExit("south", emptyField1);
+        
+        townSquare.setExit("north", signery);
+        townSquare.setExit("south", cityEntrance);
+        townSquare.setExit("east", twoPitchersPub);
+        townSquare.setExit("west", scaryAlley);
+        
 
-        theater.setExit("west", outside);
+        twoPitchersPub.setExit("east", policeStation);
+        twoPitchersPub.setExit("west", townSquare);
 
-        pub.setExit("east", outside);
+        policeStation.setExit("west", twoPitchersPub);
+        
+        signery.setExit("south", townSquare);
+        
+        scaryAlley.setExit("east", townSquare);
+        scaryAlley.setExit("west", scaryAlley2);
+        
+        scaryAlley2.setExit("north", castleEntrance);
+        scaryAlley2.setExit("east", scaryAlley);
+        
+        // castle exits
+        castleEntrance.setExit("north", grandHall);
+        castleEntrance.setExit("south", scaryAlley2);
+        
+        grandHall.setExit("north", throneRoom);
+        grandHall.setExit("south", castleEntrance);
+        grandHall.setExit("east", guardShack);
+        grandHall.setExit("west", hiddenRoom);
+        
+        throneRoom.setExit("south", grandHall);
+        
+        guardShack.setExit("east", ballroom);
+        guardShack.setExit("west", grandHall);
+        
+        ballroom.setExit("west", guardShack);
+        
+        hiddenRoom.setExit("east", grandHall);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        currentRoom = outside;  // start game outside
+        currentRoom = emptyField5;  // start game outside
     }
 
     /**
@@ -90,9 +153,20 @@ public class Game
      */
     private void printWelcome()
     {
-        System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Your phone alarm goes off, as it does every morning.");
+        System.out.println("As you hit the snooze button for the fifth time, slowly you begin");
+        System.out.println("to realize that your sheets feel surpringly like grass...");
+        System.out.println("You open your eyes to discover you are still dreaming. I mean... you kind of have to be.");
+        System.out.println("You absolutely MUST be dreaming, because you are in the middle of an empty field.");
+        System.out.println("Your phone alarm goes off again and you hit the snooze button for the umpteenth time.");
+        System.out.println("It's too early for this false awakening crap and you have better things to do,");
+        System.out.println("such as hitting the snooze and being increasingly late for work. You go back to sleep...");
+        System.out.println("Five minutes later, your phone continues to suggest that it is, in fact, time to wake up.");
+        System.out.println("Your phone is usually willing to play this game all morning, but not today. The snooze button");
+        System.out.println("ceases to work altogether. There is a certain level of urgency in this alarm. You open your eyes.");
+        System.out.println("You are pretty sure you are awake this time, but you are also pretty sure that you are");
+        System.out.println("definitely still laying in the middle of a field. This is concerning to you, for various reasons.");
+        System.out.println("Your phone is blinking, making random noises, and vibrating. You look at it... it says:");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -148,7 +222,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around at the world.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -201,6 +275,7 @@ public class Game
     private void look(Command command) 
     {
         System.out.println("You look with your eyes in an attempt to see things...");
+        System.out.println(currentRoom.getLongDescription());
         System.out.println(currentRoom.getLongDescription());
     }
 
