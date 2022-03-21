@@ -122,6 +122,14 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+                
+            case EAT:
+                eat(command);
+                break;
+                
+            case LOOK:
+                look(command);
+                break;
 
             case QUIT:
                 wantToQuit = quit(command);
@@ -170,6 +178,30 @@ public class Game
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
+    }
+    
+    /** 
+     * Eats player specified food, from inventory or current room.
+     */
+    private void eat(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what we are eating
+            System.out.println("Eat what?");
+            return;
+        }
+        String food = command.getSecondWord();
+        System.out.println("You eat the " + food + ". You wish you had more...");
+    }
+    
+    /** 
+     * Look around the room the player is currently in.
+     * @return 
+     */
+    private void look(Command command) 
+    {
+        System.out.println("You look with your eyes in an attempt to see things...");
+        System.out.println(currentRoom.getLongDescription());
     }
 
     /** 
