@@ -11,15 +11,21 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Edward Galindez
+ * @version 03/21/2022
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-        
+    
+    public static void main(String[] args) 
+    {
+       Game game = new Game();
+       game.play();
+    }
+    
     /**
      * Create the game and initialise its internal map.
      */
@@ -71,7 +77,8 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;
-        while (! finished) {
+        while (! finished) 
+        {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -102,7 +109,8 @@ public class Game
 
         CommandWord commandWord = command.getCommandWord();
 
-        switch (commandWord) {
+        switch (commandWord) 
+        {
             case UNKNOWN:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -171,12 +179,18 @@ public class Game
      */
     private boolean quit(Command command) 
     {
-        if(command.hasSecondWord()) {
+        if(command.hasSecondWord()) 
+        {
             System.out.println("Quit what?");
             return false;
         }
-        else {
+        else 
+        {
             return true;  // signal that we want to quit
         }
     }
+    
 }
+
+
+
