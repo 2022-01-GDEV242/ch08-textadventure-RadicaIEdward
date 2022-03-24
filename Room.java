@@ -118,5 +118,15 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    /**
+     * Return a room's item.
+     * @return The item within a room.
+     */
+    public Item getItem() 
+    {
+        return item;
+    }
+
 }
 

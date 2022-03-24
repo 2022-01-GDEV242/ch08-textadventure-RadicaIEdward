@@ -62,16 +62,16 @@ public class Game
         // create the rooms
         emptyField5 = new Room("an empty field. In the distance you can see a large city of some kind.");
         emptyField4 = new Room("an empty field. You are closer to the city in the distance.");
-        emptyField3 = new Room("an empty field. You are even closer to the city in the distance.");
+        emptyField3 = new Room("an empty field. You are even closer to the city in the distance.", lime);
         emptyField2 = new Room("an empty field. You are ever closer to the city in the distance.");
         emptyField1 = new Room("an empty field. The city is no longer in the distance.");
-        cityEntrance = new Room("the city entrance");
+        cityEntrance = new Room("the city entrance", apple);
         townSquare = new Room("the town square");
-        twoPitchersPub = new Room("the local pub, The Two Pitchers");
+        twoPitchersPub = new Room("the local pub, The Two Pitchers", dentedGoblet);
         scaryAlley = new Room("a scary alley");
-        scaryAlley2 = new Room("further in a scary alley");
+        scaryAlley2 = new Room("further in a scary alley", dullSword);
         touristCenter = new Room("the city tourist center");
-        policeStation = new Room("the police station");
+        policeStation = new Room("the police station", brokenLaserGun);
         signery = new Room("the sign shop");
         
         //castle
@@ -258,10 +258,14 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("You can't go that way!");
         }
         else {
             currentRoom = nextRoom;
+            if(currentRoom.getItem() != null)
+            {
+                System.out.println("You find: " + currentRoom.getItem().getItemDescription());
+            }
             System.out.println(currentRoom.getLongDescription());
         }
     }
@@ -286,7 +290,15 @@ public class Game
     private void look(Command command) 
     {
         System.out.println("You look with your eyes in an attempt to see things...");
-        currentRoom.getExitDescriptions();
+        if(currentRoom.getItem() != null)
+        {
+            currentRoom.getExitDescriptions();
+            System.out.println("You also see: " + currentRoom.getItem().getItemDescription());
+        }
+        else
+        {
+            currentRoom.getExitDescriptions();
+        }
     }
 
     /** 
