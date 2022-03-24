@@ -60,27 +60,27 @@ public class Game
         Room castleEntrance, ballroom, grandHall, throneRoom, guardShack, hiddenRoom;
         
         // create the rooms
-        emptyField5 = new Room("in an empty field. In the distance you can see a large city of some kind.");
-        emptyField4 = new Room("in an empty field. You are closer to the city in the distance.");
-        emptyField3 = new Room("in an empty field. You are even closer to the city in the distance.");
-        emptyField2 = new Room("in an empty field. You are ever closer to the city in the distance.");
-        emptyField1 = new Room("in an empty field. The city is no longer in the distance.");
-        cityEntrance = new Room(" at the city entrance");
-        townSquare = new Room("in the town square");
-        twoPitchersPub = new Room("in the local pub, The Two Pitchers");
-        scaryAlley = new Room("in a scary alley");
+        emptyField5 = new Room("an empty field. In the distance you can see a large city of some kind.");
+        emptyField4 = new Room("an empty field. You are closer to the city in the distance.");
+        emptyField3 = new Room("an empty field. You are even closer to the city in the distance.");
+        emptyField2 = new Room("an empty field. You are ever closer to the city in the distance.");
+        emptyField1 = new Room("an empty field. The city is no longer in the distance.");
+        cityEntrance = new Room("the city entrance");
+        townSquare = new Room("the town square");
+        twoPitchersPub = new Room("the local pub, The Two Pitchers");
+        scaryAlley = new Room("a scary alley");
         scaryAlley2 = new Room("further in a scary alley");
-        touristCenter = new Room("in the city tourist center");
-        policeStation = new Room("in the police station");
-        signery = new Room("at the sign shop");
+        touristCenter = new Room("the city tourist center");
+        policeStation = new Room("the police station");
+        signery = new Room("the sign shop");
         
         //castle
-        castleEntrance = new Room("at the entrance to the castle");
-        ballroom = new Room("in the castle ballroom");
-        grandHall = new Room("in the Grand Hall");
-        throneRoom = new Room("in the throne room");
-        guardShack = new Room("in the castle guard shack");
-        hiddenRoom = new Room("in a hidden room");
+        castleEntrance = new Room("the entrance to the castle");
+        ballroom = new Room("the castle ballroom");
+        grandHall = new Room("the Grand Hall");
+        throneRoom = new Room("the throne room");
+        guardShack = new Room("the castle guard shack");
+        hiddenRoom = new Room("a hidden room");
         
         // initialise room exits
         // city exits
@@ -281,14 +281,12 @@ public class Game
     }
     
     /** 
-     * Look around the room the player is currently in.
-     * @return 
+     * Looks around the player's current location and describes their surroundings. 
      */
     private void look(Command command) 
     {
         System.out.println("You look with your eyes in an attempt to see things...");
-        System.out.println(currentRoom.getLongDescription());
-        System.out.println(currentRoom.getLongDescription());
+        currentRoom.getExitDescriptions();
     }
 
     /** 

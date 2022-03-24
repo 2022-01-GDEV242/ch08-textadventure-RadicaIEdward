@@ -1,6 +1,7 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Class Room - a room in an adventure game.
@@ -46,7 +47,6 @@ public class Room
         this.description = description;
         this.item = item;
         exits = new HashMap<>();
-        
     }
 
     /**
@@ -76,7 +76,7 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        return "Your location is " + description + ".\n" + getExitString();
     }
 
     /**
@@ -88,10 +88,24 @@ public class Room
     {
         String returnString = "Exits:";
         Set<String> keys = exits.keySet();
-        for(String exit : keys) {
+        for(String exit : keys) 
+        {
             returnString += " " + exit;
         }
         return returnString;
+    }
+    
+    /**
+     * Print out the available exits and their descriptions.
+     */
+    public void getExitDescriptions()
+    {
+        Set<String> keys = exits.keySet();
+        for(String exit : keys) 
+        {
+            String exitDescription = exits.get(exit).getShortDescription();
+            System.out.println("When you look " + exit + " you see " + exitDescription);
+        }
     }
 
     /**
