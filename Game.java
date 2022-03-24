@@ -42,7 +42,19 @@ public class Game
     {
         //City
         Room emptyField1, emptyField2, emptyField3, emptyField4, emptyField5, cityEntrance, twoPitchersPub, 
-        touristCenter, policeStation, scaryAlley, scaryAlley2, signery, townSquare; 
+        touristCenter, policeStation, scaryAlley, scaryAlley2, signery, townSquare;
+        
+        Item apple, orange, lime, dentedGoblet, arrow, oldShield, dullSword, compiler, brokenLaserGun;
+        
+        apple = new Item("apple", "A sweet, delicious apple.", 1);
+        orange = new Item("orange", "A sweet, tangy orange.", 1);
+        lime = new Item("lime", "A sweet yet tart lime.", 1);
+        dentedGoblet = new Item("dented goblet", "A busted, old goblet.", 2);
+        arrow = new Item("arrow", "An arrow.", 1);
+        oldShield = new Item("shield", "A very old shield.", 3);
+        dullSword = new Item("sword", "A sword that could barely cut butter.", 4);
+        compiler = new Item("compiler", "A nerd translator.", 1);
+        brokenLaserGun = new Item("laserGun", "A laser gun in need of repair.", 2);
         
         //Castle
         Room castleEntrance, ballroom, grandHall, throneRoom, guardShack, hiddenRoom;
@@ -128,7 +140,7 @@ public class Game
 
         currentRoom = emptyField5;  // start game outside
     }
-
+    
     /**
      *  Main play routine.  Loops until end of play.
      */
