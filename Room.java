@@ -2,6 +2,7 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
@@ -20,9 +21,9 @@ import java.util.Map;
 public class Room 
 {
     private String description;
-    private HashMap<String, Room> exits;// stores exits of this room.
+    private HashMap<String, Room> exits;
+    private ArrayList<Item> items;
     private Item item;
-    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -32,21 +33,8 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        exits = new HashMap<>();
-        
-    }
-    
-    /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard". Include an item for the room.
-     * @param description The room's description.
-     */
-    public Room(String description, Item item) 
-    {
-        this.description = description;
-        this.item = item;
-        exits = new HashMap<>();
+        exits = new HashMap<String, Room>();
+        items = new ArrayList<Item>();
     }
 
     /**
@@ -120,13 +108,51 @@ public class Room
     }
     
     /**
-     * Return a room's item.
-     * @return The item within a room.
+     * Display a room's items
+     * 
+     */
+    public void displayItems() 
+    {
+        System.out.print("This room contains: ");
+        for(Item item : items) 
+        {
+            System.out.print("An " + item.getItemName() + ". ");
+        }
+        
+    }
+    
+    /**
+     * Adds items to a room
+     *
+     */
+    public void addItem(Item item) 
+    {
+        items.add(item);
+    }
+    
+    /**
+     * Display a room's items
+     * 
      */
     public Item getItem() 
     {
         return item;
     }
-
+    
+    /**
+     * Display a room's items
+     * 
+     */
+    public boolean hasItem() 
+    {
+        if (items.size() != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 

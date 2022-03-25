@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -59,19 +61,19 @@ public class Game
         //Castle
         Room castleEntrance, ballroom, grandHall, throneRoom, guardShack, hiddenRoom;
         
-        // create the rooms
+        //create the rooms
         emptyField5 = new Room("an empty field. In the distance you can see a large city of some kind.");
         emptyField4 = new Room("an empty field. You are closer to the city in the distance.");
-        emptyField3 = new Room("an empty field. You are even closer to the city in the distance.", lime);
+        emptyField3 = new Room("an empty field. You are even closer to the city in the distance.");
         emptyField2 = new Room("an empty field. You are ever closer to the city in the distance.");
         emptyField1 = new Room("an empty field. The city is no longer in the distance.");
-        cityEntrance = new Room("the city entrance", apple);
+        cityEntrance = new Room("the city entrance");
         townSquare = new Room("the town square");
-        twoPitchersPub = new Room("the local pub, The Two Pitchers", dentedGoblet);
+        twoPitchersPub = new Room("the local pub, The Two Pitchers");
         scaryAlley = new Room("a scary alley");
-        scaryAlley2 = new Room("further in a scary alley", dullSword);
+        scaryAlley2 = new Room("further in a scary alley");
         touristCenter = new Room("the city tourist center");
-        policeStation = new Room("the police station", brokenLaserGun);
+        policeStation = new Room("the police station");
         signery = new Room("the sign shop");
         
         //castle
@@ -106,7 +108,6 @@ public class Game
         townSquare.setExit("east", twoPitchersPub);
         townSquare.setExit("west", scaryAlley);
         
-
         twoPitchersPub.setExit("east", policeStation);
         twoPitchersPub.setExit("west", townSquare);
 
@@ -138,7 +139,11 @@ public class Game
         
         hiddenRoom.setExit("east", grandHall);
 
-        currentRoom = emptyField5;  // start game outside
+        currentRoom = emptyField5;  // game starting point
+        
+        //add items to rooms
+        emptyField4.addItem(apple);
+        emptyField4.addItem(orange);
     }
     
     /**
@@ -262,9 +267,9 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            if(currentRoom.getItem() != null)
+            if(currentRoom.hasItem())
             {
-                System.out.println("You find: " + currentRoom.getItem().getItemDescription());
+                currentRoom.displayItems();
             }
             System.out.println(currentRoom.getLongDescription());
         }
@@ -318,8 +323,4 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
 }
-
-
-
