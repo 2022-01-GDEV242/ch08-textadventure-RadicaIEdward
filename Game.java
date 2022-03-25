@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -20,9 +18,9 @@ import java.util.HashMap;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Room previousRoom;
-    private boolean back;
+    private Room startingRoom;
+    private Player player;
+    private boolean back; //determines if the player has used the back command
     
     public static void main(String[] args) 
     {
@@ -36,32 +34,21 @@ public class Game
     public Game() 
     {
         createRooms();
+        player = new Player("Sir Playersworth", startingRoom);
         parser = new Parser();
         back = false;
     }
 
     /**
-     * Create all the rooms and link their exits together.
+     * Create all the rooms and link their exits together. Create room items.
      */
     private void createRooms()
     {
-        //City
+        //City Rooms
         Room emptyField1, emptyField2, emptyField3, emptyField4, emptyField5, cityEntrance, twoPitchersPub, 
         touristCenter, policeStation, scaryAlley, scaryAlley2, signery, townSquare;
         
-        Item apple, orange, lime, dentedGoblet, arrow, oldShield, dullSword, compiler, brokenLaserGun;
-        
-        apple = new Item("apple", "A sweet, delicious apple.", 1);
-        orange = new Item("orange", "A sweet, tangy orange.", 1);
-        lime = new Item("lime", "A sweet yet tart lime.", 1);
-        dentedGoblet = new Item("dented goblet", "A busted, old goblet.", 2);
-        arrow = new Item("arrow", "An arrow.", 1);
-        oldShield = new Item("shield", "A very old shield.", 3);
-        dullSword = new Item("sword", "A sword that could barely cut butter.", 4);
-        compiler = new Item("compiler", "A nerd translator.", 1);
-        brokenLaserGun = new Item("laserGun", "A laser gun in need of repair.", 2);
-        
-        //Castle
+        //Castle Rooms
         Room castleEntrance, ballroom, grandHall, throneRoom, guardShack, hiddenRoom;
         
         //create the rooms
@@ -88,6 +75,7 @@ public class Game
         hiddenRoom = new Room("a hidden room");
         
         // initialise room exits
+        
         // city exits
         emptyField5.setExit("north", emptyField4);
         
@@ -142,12 +130,28 @@ public class Game
         
         hiddenRoom.setExit("east", grandHall);
 
-        currentRoom = emptyField5;  // game starting point
-        previousRoom = null;
+        startingRoom = emptyField5;  // game starting point
+        
+        //Create Room Items
+        Item apple, orange, lime, dentedGoblet, arrow, oldShield, dullSword, compiler, brokenLaserGun;
+        
+        //Initialize Items
+        apple = new Item("apple", "A sweet, delicious apple.", 1);
+        orange = new Item("orange", "A sweet, tangy orange.", 1);
+        lime = new Item("lime", "A sweet, yet tart, lime.", 1);
+        dentedGoblet = new Item("dented goblet", "A busted, old goblet.", 2);
+        arrow = new Item("arrow", "An arrow.", 1);
+        oldShield = new Item("shield", "A very old shield.", 3);
+        dullSword = new Item("sword", "A sword that can barely cut butter.", 4);
+        compiler = new Item("compiler", "A nerd translator.", 1);
+        brokenLaserGun = new Item("laserGun", "A laser gun in need of repair.", 2);
         
         //add items to rooms
         emptyField4.addItem(apple);
         emptyField4.addItem(orange);
+        
+        townSquare.addItem(compiler);
+        
     }
     
     /**
@@ -190,7 +194,7 @@ public class Game
         System.out.println("Your phone is blinking, making random noises, and vibrating. You look at it... it says:");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getRoom().getLongDescription());
     }
 
     /**
@@ -266,7 +270,8 @@ public class Game
         }
 
         String direction = command.getSecondWord();
-        Room nextRoom = currentRoom.getExit(direction);
+        Room currentRoom = player.getRoom();
+        Room nextRoom = player.getRoom().getExit(direction);
         // Try to leave the current room
         if (nextRoom == null) 
         {
@@ -275,18 +280,18 @@ public class Game
         else 
         {
             back = false;
-            previousRoom = currentRoom;
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-            if(currentRoom.hasItem())
+            player.setPreviousRoom(currentRoom);
+            player.setRoom(nextRoom);
+            System.out.println(player.getRoom().getLongDescription());
+            if(player.getRoom().hasItem())
             {
-                currentRoom.displayItems();
+                player.getRoom().displayItems();
             }
         }
     }
     
     /**
-     * 
+     * Sends the player bsack to the previos room they were in.
      */
     private void goBack()
     {
@@ -299,12 +304,13 @@ public class Game
         {
             back = true;
             System.out.println("You return to your previous location... did you drop something?");
-            currentRoom = previousRoom;
-            if(currentRoom.hasItem())
+            Room previousRoom = player.getRoom();
+            player.setPreviousRoom(previousRoom);
+            if(player.getRoom().hasItem())
             {
-                currentRoom.displayItems();
+                player.getRoom().displayItems();
             }
-            System.out.println(currentRoom.getLongDescription());
+            System.out.println(player.getRoom().getLongDescription());
         }
     }
     
@@ -328,18 +334,18 @@ public class Game
     private void look(Command command) 
     {
         System.out.println("You look with your eyes in an attempt to see things...");
-        if(currentRoom.getItem() != null)
+        if(player.getRoom().getItem() != null)
         {
-            currentRoom.getExitDescriptions();
-            if(currentRoom.hasItem())
+            player.getRoom().getExitDescriptions();
+            if(player.getRoom().hasItem())
             {
                 System.out.print("You also see: ");
-                currentRoom.displayItems();
+                player.getRoom().displayItems();
             }
         }
         else
         {
-            currentRoom.getExitDescriptions();
+            player.getRoom().getExitDescriptions();
         }
     }
 
