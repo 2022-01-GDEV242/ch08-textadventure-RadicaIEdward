@@ -116,9 +116,9 @@ public class Room
         System.out.print("This room contains: ");
         for(Item item : items) 
         {
-            System.out.print("An " + item.getItemName() + ". ");
+            System.out.print("This " + item.getItemName() + ". ");
         }
-        
+        System.out.println("");
     }
     
     /**

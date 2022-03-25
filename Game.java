@@ -21,6 +21,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room previousRoom;
+    private boolean back;
     
     public static void main(String[] args) 
     {
@@ -35,6 +37,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        back = false;
     }
 
     /**
@@ -140,6 +143,7 @@ public class Game
         hiddenRoom.setExit("east", grandHall);
 
         currentRoom = emptyField5;  // game starting point
+        previousRoom = null;
         
         //add items to rooms
         emptyField4.addItem(apple);
@@ -213,6 +217,10 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+            
+            case BACK:
+                goBack();
+                break;
                 
             case EAT:
                 eat(command);
@@ -258,15 +266,40 @@ public class Game
         }
 
         String direction = command.getSecondWord();
-
-        // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
+        // Try to leave the current room
+        if (nextRoom == null) 
+        {
             System.out.println("You can't go that way!");
         }
-        else {
+        else 
+        {
+            back = false;
+            previousRoom = currentRoom;
             currentRoom = nextRoom;
+            System.out.println(currentRoom.getLongDescription());
+            if(currentRoom.hasItem())
+            {
+                currentRoom.displayItems();
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void goBack()
+    {
+        if(back)
+        {
+            System.out.println("You JUST went back! Are you trying to go forward?! That's not a command!");
+            System.out.println("Pick a direction, you meandering fool!!!");
+        }    
+        else
+        {
+            back = true;
+            System.out.println("You return to your previous location... did you drop something?");
+            currentRoom = previousRoom;
             if(currentRoom.hasItem())
             {
                 currentRoom.displayItems();
@@ -298,7 +331,11 @@ public class Game
         if(currentRoom.getItem() != null)
         {
             currentRoom.getExitDescriptions();
-            System.out.println("You also see: " + currentRoom.getItem().getItemDescription());
+            if(currentRoom.hasItem())
+            {
+                System.out.print("You also see: ");
+                currentRoom.displayItems();
+            }
         }
         else
         {
