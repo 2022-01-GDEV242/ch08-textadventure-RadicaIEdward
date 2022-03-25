@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,6 +21,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room previousRoom;
+    private boolean back;
     
     public static void main(String[] args) 
     {
@@ -33,6 +37,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        back = false;
     }
 
     /**
@@ -59,7 +64,7 @@ public class Game
         //Castle
         Room castleEntrance, ballroom, grandHall, throneRoom, guardShack, hiddenRoom;
         
-        // create the rooms
+        //create the rooms
         emptyField5 = new Room("an empty field. In the distance you can see a large city of some kind.");
         emptyField4 = new Room("an empty field. You are closer to the city in the distance.");
         emptyField3 = new Room("an empty field. You are even closer to the city in the distance.");
@@ -106,7 +111,6 @@ public class Game
         townSquare.setExit("east", twoPitchersPub);
         townSquare.setExit("west", scaryAlley);
         
-
         twoPitchersPub.setExit("east", policeStation);
         twoPitchersPub.setExit("west", townSquare);
 
@@ -138,7 +142,12 @@ public class Game
         
         hiddenRoom.setExit("east", grandHall);
 
-        currentRoom = emptyField5;  // start game outside
+        currentRoom = emptyField5;  // game starting point
+        previousRoom = null;
+        
+        //add items to rooms
+        emptyField4.addItem(apple);
+        emptyField4.addItem(orange);
     }
     
     /**
@@ -208,6 +217,10 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+            
+            case BACK:
+                goBack();
+                break;
                 
             case EAT:
                 eat(command);
@@ -253,15 +266,44 @@ public class Game
         }
 
         String direction = command.getSecondWord();
-
-        // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
+        // Try to leave the current room
+        if (nextRoom == null) 
+        {
+            System.out.println("You can't go that way!");
         }
-        else {
+        else 
+        {
+            back = false;
+            previousRoom = currentRoom;
             currentRoom = nextRoom;
+            System.out.println(currentRoom.getLongDescription());
+            if(currentRoom.hasItem())
+            {
+                currentRoom.displayItems();
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void goBack()
+    {
+        if(back)
+        {
+            System.out.println("You JUST went back! Are you trying to go forward?! That's not a command!");
+            System.out.println("Pick a direction, you meandering fool!!!");
+        }    
+        else
+        {
+            back = true;
+            System.out.println("You return to your previous location... did you drop something?");
+            currentRoom = previousRoom;
+            if(currentRoom.hasItem())
+            {
+                currentRoom.displayItems();
+            }
             System.out.println(currentRoom.getLongDescription());
         }
     }
@@ -286,7 +328,19 @@ public class Game
     private void look(Command command) 
     {
         System.out.println("You look with your eyes in an attempt to see things...");
-        currentRoom.getExitDescriptions();
+        if(currentRoom.getItem() != null)
+        {
+            currentRoom.getExitDescriptions();
+            if(currentRoom.hasItem())
+            {
+                System.out.print("You also see: ");
+                currentRoom.displayItems();
+            }
+        }
+        else
+        {
+            currentRoom.getExitDescriptions();
+        }
     }
 
     /** 
@@ -306,8 +360,4 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
 }
-
-
-

@@ -17,9 +17,8 @@ public class Item
     private String name;
     private String description;
     private int weight;
-
     /**
-     * Create an object
+     * Create an Item object
      */
     public Item(String name, String description, int weight)
     {
