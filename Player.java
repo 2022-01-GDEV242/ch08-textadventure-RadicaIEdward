@@ -85,4 +85,20 @@ public class Player
     {
         back = true;
     }
+    
+    /**
+     * Adds a an item to a player's inventory
+     */
+    public void addItem(Item item)
+    {
+        playerItems.add(item);
+    }
+    
+       /**
+     * Adds a an item to a player's inventory
+     */
+    public ArrayList<Item> getPlayerItems()
+    {
+        return playerItems;
+    }
 }

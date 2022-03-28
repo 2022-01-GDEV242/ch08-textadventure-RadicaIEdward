@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -231,7 +233,15 @@ public class Game
             case LOOK:
                 look(command);
                 break;
-
+                
+            case TAKE:
+                take(command);
+                break;
+                
+            case DROP:
+                drop(command);
+                break;
+                
             case QUIT:
                 wantToQuit = quit(command);
                 break;
@@ -347,6 +357,57 @@ public class Game
         }
     }
 
+    /** 
+     * Takes an item from a room and places it in a player's inventory 
+     */
+    private void take(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what to take...
+            System.out.println("Take what now?");
+            return;
+        }
+        String itemName = command.getSecondWord();
+        boolean hasItem = player.getRoom().hasItem();
+        if (!hasItem) 
+        {
+            System.out.println("You really have gone mad. There's no " + itemName + " here!");
+        }
+        else  
+        {
+            for(Item item : player.getRoom().getItem())
+            {
+                if(itemName.equals(item.getItemName()))
+                {
+                    player.addItem(item); // add item to player inventory
+                    player.getRoom().removeItem(item); // remove item from room
+                }
+            }
+            System.out.println("You take the " + itemName + " and place it in your bag.");
+        }
+    }
+    
+    /** 
+     * Drops an item from a players inventory
+     */
+    private void drop(Command command) 
+    {
+        System.out.println("You look with your eyes in an attempt to see things...");
+        if(player.getRoom().hasItem())
+        {
+            player.getRoom().getExitDescriptions();
+            if(player.getRoom().hasItem())
+            {
+                System.out.print("You also see: ");
+                player.getRoom().displayItems();
+            }
+        }
+        else
+        {
+            player.getRoom().getExitDescriptions();
+        }
+    }
+    
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.

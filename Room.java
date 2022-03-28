@@ -132,9 +132,9 @@ public class Room
      * Display a room's items
      * 
      */
-    public Item getItem() 
+    public ArrayList<Item> getItem() 
     {
-        return item;
+        return items;
     }
     
     /**
@@ -151,6 +151,15 @@ public class Room
         {
             return false;
         }
+    }
+    
+    /**
+     * Remove an item from the room
+     * 
+     */
+    public void removeItem(Item item) 
+    {
+        items.remove(item);
     }
 }
 
