@@ -291,10 +291,26 @@ public class Game
             player.setBackFalse();
             player.setPreviousRoom(currentRoom);
             player.setRoom(nextRoom);
+            player.takeStep();
             System.out.println(player.getRoom().getLongDescription());
             if(player.getRoom().hasItem())
             {
                 player.getRoom().displayItems();
+            }
+            if(player.getHealth() < 5 && player.getHealth() > 2)
+            {
+                System.out.println("\nYou're getting hungry... you should use the 'eat' command...");
+                System.out.println("We made it really easy. Just type 'eat' followed by a food item.");
+                System.out.println("We're pretty sure you'll find some laying around..."); 
+                System.out.println("Seriously, try it. You don't even need it in your inventory.");
+            }
+            else if(player.getHealth() == 1)
+            {
+                System.out.println("\nWe have been very clear, you should eat. One more step and you will LITERALLY DIE.");
+            }
+            else if(player.getHealth() == 0)
+            {
+                System.out.println("\nGreat job. Now you're dead. Looks like you'll be a zombie now.\nPlease feel free to continue playing... as a freakin' zombie.");
             }
         }
     }
@@ -334,7 +350,10 @@ public class Game
             return;
         }
         String food = command.getSecondWord();
+        System.out.println("You look around and suddenly find " + food + "!");
+        player.eatFood();
         System.out.println("You eat the " + food + ". You wish you had more...");
+        System.out.println("Your health is now " + player.getHealth() + ". You should find more soon.");
     }
     
     /** 

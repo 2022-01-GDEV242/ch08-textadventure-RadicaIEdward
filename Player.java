@@ -12,6 +12,7 @@ public class Player
     private boolean back; //determines if player has used the back command in the previous room
     private String name;
     private ArrayList<Item> playerItems;
+    private int health;
 
     /**
      * Constructor for objects of class Player
@@ -22,6 +23,7 @@ public class Player
         currentRoom = startingRoom;
         previousRoom = null;
         playerItems = new ArrayList<Item>();
+        health = 10;
         back = false;
     }
 
@@ -110,5 +112,20 @@ public class Player
     public void removeItem(Item item)
     {
         playerItems.remove(item);
+    }
+    
+    public int getHealth()
+    {
+        return health;
+    }
+    
+    public void eatFood()
+    {
+        health += 10;
+    }
+    
+    public void takeStep()
+    {
+        health -= 1;
     }
 }

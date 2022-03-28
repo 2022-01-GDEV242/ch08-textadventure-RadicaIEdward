@@ -1,33 +1,34 @@
 
 /**
- * 
+ * Health class. Eating food gives health.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Edward Galindez
+ * @version (03/28/2022)
  */
 public class Health
 {
     // instance variables - replace the example below with your own
-    private int x;
+    private int health;
 
     /**
      * Constructor for objects of class Health
      */
     public Health()
     {
-        // initialise instance variables
-        x = 0;
+        health = 10;
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Returns players current health
+     * @return The players health points
      */
-    public int sampleMethod(int y)
+    public int getHealth()
     {
-        // put your code here
-        return x + y;
+        return health;
+    }
+    
+    public void setHealth(int healthPoints)
+    {
+        health = healthPoints;
     }
 }
