@@ -138,8 +138,8 @@ public class Room
     }
     
     /**
-     * Display a room's items
-     * 
+     * Check if a room has an item
+     * @return Returns true if a room has an item and false if it does not
      */
     public boolean hasItem() 
     {

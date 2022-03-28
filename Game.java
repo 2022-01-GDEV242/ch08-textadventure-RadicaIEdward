@@ -20,7 +20,6 @@ public class Game
     private Parser parser;
     private Room startingRoom;
     private Player player;
-    private boolean back; //determines if the player has used the back command
     
     public static void main(String[] args) 
     {
@@ -36,7 +35,6 @@ public class Game
         createRooms();
         player = new Player("Sir Playersworth", startingRoom);
         parser = new Parser();
-        back = false;
     }
 
     /**
@@ -279,7 +277,7 @@ public class Game
         }
         else 
         {
-            back = false;
+            player.setBackFalse();
             player.setPreviousRoom(currentRoom);
             player.setRoom(nextRoom);
             System.out.println(player.getRoom().getLongDescription());
@@ -295,14 +293,14 @@ public class Game
      */
     private void goBack()
     {
-        if(back)
+        if(player.getBack())
         {
             System.out.println("You JUST went back! Are you trying to go forward?! That's not a command!");
             System.out.println("Pick a direction, you meandering fool!!!");
         }    
         else
         {
-            back = true;
+            player.setBackTrue();
             System.out.println("You return to your previous location... did you drop something?");
             Room previousRoom = player.getRoom();
             player.setPreviousRoom(previousRoom);
@@ -334,7 +332,7 @@ public class Game
     private void look(Command command) 
     {
         System.out.println("You look with your eyes in an attempt to see things...");
-        if(player.getRoom().getItem() != null)
+        if(player.getRoom().hasItem())
         {
             player.getRoom().getExitDescriptions();
             if(player.getRoom().hasItem())

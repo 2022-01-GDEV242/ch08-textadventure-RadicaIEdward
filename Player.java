@@ -9,6 +9,7 @@ public class Player
 {
     private Room currentRoom;
     private Room previousRoom;
+    private boolean back; //determines if player has used the back command in the previous room
     private String name;
     private ArrayList<Item> playerItems;
 
@@ -21,6 +22,7 @@ public class Player
         currentRoom = startingRoom;
         previousRoom = null;
         playerItems = new ArrayList<Item>();
+        back = false;
     }
 
     /**
@@ -57,5 +59,30 @@ public class Player
     public void setPreviousRoom(Room room)
     {
         previousRoom = room;
+    }
+    
+    /**
+     * Returns the value of the back field.
+     * @return back
+     */
+    public boolean getBack() //to where you once belonged
+    {
+        return back;
+    }
+    
+    /**
+     * Sets the back field to false.
+     */
+    public void setBackFalse()
+    {
+        back = false;
+    }
+    
+    /**
+     * Sets the back field to true.
+     */
+    public void setBackTrue()
+    {
+        back = true;
     }
 }
