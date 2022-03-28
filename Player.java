@@ -94,11 +94,21 @@ public class Player
         playerItems.add(item);
     }
     
-       /**
-     * Adds a an item to a player's inventory
+    /**
+     * Adds an item to a player's inventory
+     * @return The playerItems arraylist
      */
     public ArrayList<Item> getPlayerItems()
     {
         return playerItems;
+    }
+    
+    /**
+     * Adds an item to a player's inventory
+     * @return The playerItems arraylist
+     */
+    public void removeItem(Item item)
+    {
+        playerItems.remove(item);
     }
 }

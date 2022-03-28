@@ -1,0 +1,12 @@
+B level elements
+1. Add items to game, each room has one item. Each item has a description and weight, but I also included a name. When printing room info, items are included.
+
+2. Make it so rooms can hold multiple items
+
+3. Implemented Back Command (One room only)
+
+4. I also implemented a Player class that can carry one or more objects so that I could implement other player stuff later.
+
+A Level elements
+
+1. 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  This class is the main class of the "World of Zuul" application. 
@@ -368,20 +369,26 @@ public class Game
             return;
         }
         String itemName = command.getSecondWord();
-        boolean hasItem = player.getRoom().hasItem();
-        if (!hasItem) 
+        ArrayList<Item> roomItems = player.getRoom().getItems();
+        Iterator<Item> it = roomItems.iterator();
+        Item currentItem = null;
+        String currentItemName = "";
+        if (player.getRoom().getItems().size() == 0) 
         {
             System.out.println("You really have gone mad. There's no " + itemName + " here!");
         }
         else  
         {
-            for(Item item : player.getRoom().getItem())
+            while(it.hasNext()) 
             {
-                if(itemName.equals(item.getItemName()))
+                currentItem = it.next();
+                currentItemName = currentItem.getItemName(); 
+                if(currentItemName.equals(itemName))
                 {
-                    player.addItem(item); // add item to player inventory
-                    player.getRoom().removeItem(item); // remove item from room
-                }
+                    player.addItem(currentItem); // add item to player inventory
+                    it.remove();// remove item from room
+                    break;
+                }    
             }
             System.out.println("You take the " + itemName + " and place it in your bag.");
         }
@@ -392,22 +399,37 @@ public class Game
      */
     private void drop(Command command) 
     {
-        System.out.println("You look with your eyes in an attempt to see things...");
-        if(player.getRoom().hasItem())
-        {
-            player.getRoom().getExitDescriptions();
-            if(player.getRoom().hasItem())
-            {
-                System.out.print("You also see: ");
-                player.getRoom().displayItems();
-            }
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what to take...
+            System.out.println("Drop what where?");
+            return;
         }
-        else
+        String itemName = command.getSecondWord();
+        ArrayList<Item> playerItems = player.getPlayerItems();
+        Iterator<Item> it = playerItems.iterator();
+        Item currentItem = null;
+        String currentItemName = "";
+        if (player.getPlayerItems().size() == 0) 
         {
-            player.getRoom().getExitDescriptions();
+            System.out.println("You search your pockets. You have NOTHING!");
+        }
+        else  
+        {
+            while(it.hasNext()) 
+            {
+                currentItem = it.next();
+                currentItemName = currentItem.getItemName(); 
+                if(currentItemName.equals(itemName))
+                {
+                    it.remove(); // remove item from player inventory
+                    player.getRoom().addItem(currentItem); // place item in room
+                    break;
+                }    
+            }
+            System.out.println("You take the " + itemName + " and place it in your bag.");
         }
     }
-    
+
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.

@@ -1,6 +1,7 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Class Room - a room in an adventure game.
@@ -130,9 +131,9 @@ public class Room
     
     /**
      * Display a room's items
-     * 
+     * @return items Returns rooms item arraylist
      */
-    public ArrayList<Item> getItem() 
+    public ArrayList<Item> getItems() 
     {
         return items;
     }
@@ -162,4 +163,3 @@ public class Room
         items.remove(item);
     }
 }
-
