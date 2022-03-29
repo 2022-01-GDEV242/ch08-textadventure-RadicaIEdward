@@ -106,24 +106,33 @@ public class Player
     }
     
     /**
-     * Adds an item to a player's inventory
-     * @return The playerItems arraylist
+     * Removes an item from a player's inventory
      */
     public void removeItem(Item item)
     {
         playerItems.remove(item);
     }
     
+    /**
+     * Returns the players current health
+     * @return health The players health 
+     */
     public int getHealth()
     {
         return health;
     }
     
+    /**
+     * Adds 10 health to the player after eating food
+     */
     public void eatFood()
     {
         health += 10;
     }
     
+    /**
+     * Removes one health each time a player takes a step (moves from room to room)
+     */
     public void takeStep()
     {
         health -= 1;

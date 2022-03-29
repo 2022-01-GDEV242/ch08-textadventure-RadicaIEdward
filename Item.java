@@ -30,7 +30,6 @@ public class Item
 
     /**
      * Gets the name of the item
-     *
      * @return The item's name  
      */
     public String getItemName()
@@ -40,7 +39,6 @@ public class Item
     
     /**
      * Gets the description of the item
-     *
      * @return The item's description  
      */
     public String getItemDescription()
@@ -50,7 +48,6 @@ public class Item
     
     /**
      * Gets the name of the item
-     *
      * @return  The item's name  
      */
     public int getItemWeight()

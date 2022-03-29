@@ -1,7 +1,6 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Class Room - a room in an adventure game.
@@ -141,6 +140,7 @@ public class Room
     /**
      * Check if a room has an item
      * @return Returns true if a room has an item and false if it does not
+     * @return Returns false if a room has no items in it
      */
     public boolean hasItem() 
     {
